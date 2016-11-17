@@ -1,0 +1,33 @@
+{
+  "name": "fan-throttle",
+  "version": "1.0.0",
+  "description": "Tools for throttling code based on CPU fan speed",
+  "main": "index.js",
+  "scripts": {
+    "test": "mocha"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/diamondio/fan-throttle.git"
+  },
+  "keywords": [
+    "better",
+    "fan",
+    "throttle",
+    "slow",
+    "speed",
+    "CPU"
+  ],
+  "author": "Diamond Inc",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/diamondio/fan-throttle/issues"
+  },
+  "homepage": "https://github.com/diamondio/fan-throttle#readme",
+  "dependencies": {
+    "smc": "^1.0.3"
+  },
+  "devDependencies": {
+    "async": "^2.1.2"
+  }
+}
