@@ -2,7 +2,7 @@ var throttle = require('.');
 var cp = require('child_process');
 var async = require('async');
 
-var spd = 2000;
+var spd = 4600;
 var c = 0;
 
 var doIt = function () {
