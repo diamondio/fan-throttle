@@ -3,7 +3,7 @@ var smc = require('smc');
 var numFans = smc.fans();
 var savedFanSpeed = null;
 var shouldCheck = true;
-var checkRate = 3000;
+var checkRate = 300;
 
 var getMaxFanSpeed = function () {
   if (shouldCheck) {
@@ -21,16 +21,37 @@ var getMaxFanSpeed = function () {
 }
 
 var maxThrottleRate = 10000; // 10 seconds
-var minThrottleRate = 1;
-var throttleRate = minThrottleRate;
+var prevVal = 0;
+
+var integ = 0;
+
+var p = 1;
+var i = 0.005;
+var d = 20;
+
+
+var integCap = 1000 / i;
 
 module.exports = function (fanSpeed, cb) {
-  if (getMaxFanSpeed() < fanSpeed) {
-    if (throttleRate === minThrottleRate) return setImmediate(cb);
-    throttleRate = Math.max(minThrottleRate, throttleRate / 2);
-    return setImmediate(cb);
-  }
-  throttleRate = Math.min(maxThrottleRate, throttleRate * 2);
-  return setTimeout(cb, throttleRate);
+  var currentFan = getMaxFanSpeed();
+  var val = currentFan - fanSpeed;
+  if (!prevVal) prevVal = val;
+  var derriv = val - prevVal;
+  integ += val;
+  if (integ > integCap) integ = integCap;
+  if (integ < -integCap) integ = -integCap;
+
+  var waitTime = p * val + i * integ + d * derriv;
+  if (waitTime > maxThrottleRate) waitTime = maxThrottleRate;
+  /*
+  console.log(`
+P: ${val * p},
+I: ${integ * i},
+D: ${derriv * d}
+`);*/
+
+  setTimeout(cb, waitTime);
+
+  prevVal = val;
 }
 
