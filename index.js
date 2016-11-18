@@ -11,7 +11,7 @@ var getMaxFanSpeed = function () {
     savedFanSpeed = 0;
     for (var i = 0; i < numFans; i++) {
       var spd = smc.fanRpm(i);
-      console.log('Speed is', spd);
+      //console.log('Speed is', spd);
       if (spd > savedFanSpeed) savedFanSpeed = spd;
     }
     setTimeout(function () {
@@ -45,12 +45,12 @@ module.exports = function (fanSpeed, cb) {
 
   var waitTime = p * val + i * integ + d * derriv;
   if (waitTime > maxThrottleRate) waitTime = maxThrottleRate;
-
+/*
   console.log(`
 P: ${val * p},
 I: ${integ * i},
 D: ${derriv * d}
-`);
+`);*/
 
   setTimeout(cb, waitTime);
 
