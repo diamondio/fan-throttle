@@ -52,7 +52,11 @@ I: ${integ * i},
 D: ${derriv * d}
 `);*/
 
-  setTimeout(cb, waitTime);
+  if (waitTime < 0) {
+    setImmediate(cb);
+  } else {
+    setTimeout(cb, waitTime);
+  }
 
   prevVal = val;
 }
